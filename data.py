@@ -3,7 +3,7 @@ crefentials = {
     "password": "zLS@4L$vrrL0LJA",
 }
 users_to_parse = [
-    "n.shmelyov",
+    # "n.shmelyov",
     # "alex.moroz",
-    # "warsaw.here",
+    "warsaw.here",
 ]

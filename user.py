@@ -29,7 +29,7 @@ class User:
         """
         try:
             User.browser.get('https://instagram.com')
-            time.sleep(10)
+            time.sleep(5)
             User.browser.find_element(by=By.XPATH, value='/html/body/div[4]/div/div/button[2]').click()
             time.sleep(2)
 
@@ -40,10 +40,10 @@ class User:
             input_password.send_keys(credentials['password'])
             time.sleep(2)
             input_password.send_keys(Keys.ENTER)
-            time.sleep(10)
+            time.sleep(5)
 
             User.browser.find_element(by=By.XPATH, value='/html/body/div[1]/section/main/div/div/div/section/div/button').click()
-            time.sleep(10)
+            time.sleep(5)
 
             User.browser.find_element(
                             by=By.XPATH,
@@ -51,7 +51,7 @@ class User:
                                     '/div/div/div[1]/div/div[2]/div/div/div'
                                     '/div/div/div/div/div[3]/button[2]').click()
 
-            time.sleep(10)
+            time.sleep(5)
             return True
 
         except Exception as err:
@@ -88,7 +88,7 @@ class User:
 
 
     def parse_followers(self, group='followers', verbose=True) -> None:
-        conn, cursor = self.__open_db_connection(f"{self.username}")
+        conn, cursor = self.__open_db_connection()
         self.__create_table()
         self._open_dialog(self._get_link())
         print('\nGetting {} users…{}'.format(
@@ -113,10 +113,10 @@ class User:
                 try:
                     link_to_user = user.find_element(By.TAG_NAME, 'a').get_attribute('href')
                     last_user_index = index
-                    user_name = link_to_user[26:-1]
-                    User.__insert_follower(conn, cursor, user_name)
+                    
                     if link_to_user not in links:
                         links.append(link_to_user)
+                        User.__insert_follower(conn, cursor, link_to_user[26:-1])
                         if verbose:
                             print(
                                 '{0:.2f}% {1:s}'.format(
